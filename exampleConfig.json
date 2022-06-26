@@ -1,0 +1,19 @@
+{
+    "services": {
+        "database": {
+            "path": "/Users/username/project/database",
+            "actions": {
+                "start": "docker-compose up -d",
+                "stop": "docker-compose stop"
+            }
+        },
+        "backend": {
+            "path": "/Users/username/project/backend",
+            "actions": {
+                "start": "docker-compose up -d",
+                "stop": "docker-compose stop",
+                "bash": "docker-compose exec app bash"
+            }
+        }
+    }
+}
