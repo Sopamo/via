@@ -1,7 +1,7 @@
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/Sopamo/via/main/assets/logo.png" width="269">
-  
+
   A utility to manage your different workspaces with ease.
 </div>
 
@@ -13,6 +13,8 @@ mkdir ~/.via
 cp exampleConfig.json ~/.via/projects/my-project.json
 ```
 Then edit my-project.json to configure your first workspace. You can create as many project.json files as you need.
+
+Download the latest version of via and place it into `/usr/bin`.
 
 ## Mandatory actions
 You always need these actions
