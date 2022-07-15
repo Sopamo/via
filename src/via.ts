@@ -7,18 +7,17 @@ type ProjectConfig = {
   services: Record<string, ServiceConfig>
 }
 
-// Should be `~/.w` later on
-const wRoot = '/home/paul/dev/playground/workspace'
+const viaRoot = Deno.env.get("HOME") + '/.via'
 
 async function getConfig() {
   const config: Record<string, ProjectConfig> = {}
   const decoder = new TextDecoder("utf-8");
-  for await (const dirEntry of Deno.readDir(wRoot + '/projects')) {
+  for await (const dirEntry of Deno.readDir(viaRoot + '/projects')) {
     if(!dirEntry.name.endsWith('.json')) {
       continue
     }
     const projectName = dirEntry.name.replace(/\.json$/, "")
-    const fileContent = decoder.decode(await Deno.readFile(wRoot + '/projects/' + dirEntry.name))
+    const fileContent = decoder.decode(await Deno.readFile(viaRoot + '/projects/' + dirEntry.name))
     config[projectName] = JSON.parse(fileContent) as ProjectConfig
   }
   return config
