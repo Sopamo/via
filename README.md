@@ -1,6 +1,7 @@
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/Sopamo/via/main/assets/logo.png" width="269">
+  
   A utility to manage your different workspaces with ease.
 </div>
 
