@@ -14,7 +14,7 @@ cp exampleConfig.json ~/.via/projects/my-project.json
 ```
 Then edit my-project.json to configure your first workspace. You can create as many project.json files as you need.
 
-Download the latest version of via and place it into `/usr/bin`.
+Download the [latest version](https://github.com/Sopamo/via/releases) of via and place it into `/usr/bin`.
 
 ## Mandatory actions
 You always need these actions
