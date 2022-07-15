@@ -1,5 +1,3 @@
-import { copy } from "https://deno.land/std@0.104.0/io/util.ts";
-
 type ServiceConfig = {
   path: string,
   actions: {"start": string, "stop": string} & Record<string, string>
@@ -10,7 +8,7 @@ type ProjectConfig = {
 }
 
 // Should be `~/.w` later on
-const wRoot = '/Users/paulmohr/Arbeit/dev/w'
+const wRoot = '/home/paul/dev/playground/workspace'
 
 async function getConfig() {
   const config: Record<string, ProjectConfig> = {}
@@ -51,11 +49,7 @@ async function runCommand(cmd: string, cwd: string) {
   const p = Deno.run({
     cmd: cmd.split(" "),
     cwd,
-    stdout: "piped",
-    stderr: "piped",
   });
-  copy(p.stdout, Deno.stdout);
-  copy(p.stderr, Deno.stderr);
   await p.status()
 }
 
@@ -80,4 +74,9 @@ if(projectWideActions.includes(command)) {
   })
 
   await Promise.all(processes)
+} else {
+  const serviceName = args[1]
+  const command = args[2]
+  const service = config[project].services[serviceName]
+  await runCommand(service.actions[command], service.path)
 }
