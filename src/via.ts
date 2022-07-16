@@ -10,6 +10,27 @@ type ProjectConfig = {
   services: Record<string, ServiceConfig>
 }
 
+async function initConfigDirectory(projectName: string) {
+  await ensureDir(`${viaRoot}/projects`)
+  const projectConfigFilePath = `${viaRoot}/projects/${projectName}.yaml`
+  if (await fileExists(projectConfigFilePath)) {
+    console.log(`configuration file for project "${projectName}" already exists`)
+    return
+  }
+
+  const exampleProjectConfigContent = `services:
+  database:
+    path: ${Deno.env.get("HOME")}/path/to/service
+    actions:
+      start: docker-compose up -d
+      stop: docker-compose down
+`
+    await Deno.writeTextFile(projectConfigFilePath, exampleProjectConfigContent)
+
+  console.log(`configuration file for project was created at "${projectConfigFilePath}"`)
+  console.log('Edit this config for your needs')
+}
+
 const viaRoot = Deno.env.get("HOME") + '/.via'
 
 async function getConfig() {
@@ -34,6 +55,12 @@ async function getConfig() {
   }
 
   return config
+}
+
+if (Deno.args[0] === 'init') {
+  const projectName = Deno.args[1]
+  await initConfigDirectory(projectName)
+  Deno.exit()
 }
 
 const config = await getConfig()

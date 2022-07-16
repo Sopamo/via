@@ -15,17 +15,11 @@
 <br />
 
 ## Project setup
-First, run
-
-```bash
-mkdir ~/.via
-cp exampleConfig.json ~/.via/projects/my-project.json
-```
-Then edit my-project.json to configure your first workspace. You can create as many project.json files as you need. 
-
 Download the [latest version](https://github.com/Sopamo/via/releases) of via and move it to `/usr/local/bin/v`.
 
-You can then run `v my-project start` to start your project. Of course you can rename the my-project.json file to match your project's name.
+Create your first project configuration file by running `v init my-project` and follow the instructions.
+
+Then you can then run `v my-project start` to start your project. Of course you can rename the my-project.yaml file to match your project's name.
 
 ## Project configuration
 
@@ -65,10 +59,10 @@ Then, to run the project locally, install [deno](https://deno.land).
 
 To run the code directly, run:
 ```bash
-deno run --allow-read --allow-run --allow-env ./src/via.ts [project] [service] [action]
+deno run --allow-read --allow-run --allow-env --allow-write ./src/via.ts [project] [service] [action]
 ```
 
 To build the binary, run:
 ```bash
-deno compile --allow-read --allow-run --allow-env ./src/via.ts
+deno compile --allow-read --allow-run --allow-env --allow-write ./src/via.ts
 ```
