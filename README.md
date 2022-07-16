@@ -30,38 +30,26 @@ You can then run `v my-project start` to start your project. Of course you can r
 ## Project configuration
 
 ### Minimal configuration
-```json
-{
-  "services": {
-    "app": {
-        "path": "/Users/username/project/app",
-        "actions": {
-            "start": "docker-compose up -d",
-            "stop": "docker-compose stop"
-        }
-    }
-  }
-}
+```yaml
+services:
+  database:
+      path: /Users/username/project/app
+      actions:
+        start: docker-compose up -d
+        stop: docker-compose down
 ```
 You always have to specify the start and stop actions.
 
 When running the start action, all other projects will be stopped automatically.
 
 ### Adding custom actions
-```json
-{
-  "services": {
-    "app": {
-        ...
-        "actions": {
-            ...
-            "bash": "docker-compose exec app bash"
-        }
-    }
-  }
-}
+```yaml
+services:
+  app:
+    actions:
+      bash: docker-compose exec app bash
 ```
-You can run individual actions like this: 
+You can run individual actions like this:
 
 ```bash
 v my-project app bash
