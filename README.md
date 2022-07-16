@@ -17,7 +17,7 @@
 ## Project setup
 First, run
 
-```
+```bash
 mkdir ~/.via
 cp exampleConfig.json ~/.via/projects/my-project.json
 ```
