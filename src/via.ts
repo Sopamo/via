@@ -1,3 +1,6 @@
+import { parse as yamlParse } from "https://deno.land/std/encoding/yaml.ts"
+import { ensureDir, exists as fileExists } from "https://deno.land/std/fs/mod.ts"
+
 type ServiceConfig = {
   path: string,
   actions: {"start": string, "stop": string} & Record<string, string>
@@ -7,20 +10,60 @@ type ProjectConfig = {
   services: Record<string, ServiceConfig>
 }
 
+async function initConfigDirectory(projectName: string) {
+  if(!projectName) {
+    console.log('please specify a project name')
+  }
+  await ensureDir(`${viaRoot}/projects`)
+  const projectConfigFilePath = `${viaRoot}/projects/${projectName}.yaml`
+  if (await fileExists(projectConfigFilePath)) {
+    console.log(`configuration file for project "${projectName}" already exists`)
+    return
+  }
+
+  const exampleProjectConfigContent = `services:
+  database:
+    path: ${Deno.env.get("HOME")}/path/to/service
+    actions:
+      start: docker-compose up -d
+      stop: docker-compose down
+`
+    await Deno.writeTextFile(projectConfigFilePath, exampleProjectConfigContent)
+
+  console.log(`configuration file for project was created at "${projectConfigFilePath}"`)
+  console.log('Edit this config for your needs')
+}
+
 const viaRoot = Deno.env.get("HOME") + '/.via'
 
 async function getConfig() {
   const config: Record<string, ProjectConfig> = {}
   const decoder = new TextDecoder("utf-8");
+  const viaProjectConfigPath = viaRoot + '/projects';
+  if (!await fileExists(viaProjectConfigPath)) {
+    console.error('The config directory does not exists')
+    console.error('Create your first project configuration by running "v init <project name>"')
+    Deno.exit(1)
+  }
   for await (const dirEntry of Deno.readDir(viaRoot + '/projects')) {
-    if(!dirEntry.name.endsWith('.json')) {
+    const extension = dirEntry.name.split('.').pop()
+    if(!dirEntry.isFile || !extension || !['yaml', 'yml'].includes(extension)) {
       continue
     }
-    const projectName = dirEntry.name.replace(/\.json$/, "")
+
+    const projectName = dirEntry.name.replace(new RegExp(`\.${extension}$`), '') // remove extension
     const fileContent = decoder.decode(await Deno.readFile(viaRoot + '/projects/' + dirEntry.name))
-    config[projectName] = JSON.parse(fileContent) as ProjectConfig
+
+    config[projectName] = yamlParse(fileContent) as ProjectConfig
   }
+
   return config
+}
+
+if (Deno.args[0] === 'init') {
+  const projectName = Deno.args[1]
+  await initConfigDirectory(projectName)
+  Deno.exit()
 }
 
 const config = await getConfig()

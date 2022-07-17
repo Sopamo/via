@@ -1,0 +1,13 @@
+services:
+  database:
+    path: /Users/username/project/database
+    actions:
+      start: docker-compose up -d
+      stop: docker-compose down
+  backend:
+    path: /Users/username/project/backend
+    actions:
+      start: docker-compose up -d
+      stop: docker-compose down
+      bash: docker-compose exec app bash
+
