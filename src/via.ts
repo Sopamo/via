@@ -11,6 +11,9 @@ type ProjectConfig = {
 }
 
 async function initConfigDirectory(projectName: string) {
+  if(!projectName) {
+    console.log('please specify a project name')
+  }
   await ensureDir(`${viaRoot}/projects`)
   const projectConfigFilePath = `${viaRoot}/projects/${projectName}.yaml`
   if (await fileExists(projectConfigFilePath)) {
@@ -44,7 +47,7 @@ async function getConfig() {
   }
   for await (const dirEntry of Deno.readDir(viaRoot + '/projects')) {
     const extension = dirEntry.name.split('.').pop()
-    if(!dirEntry.isFile || !['yaml', 'yml'].includes(extension)) {
+    if(!dirEntry.isFile || !extension || !['yaml', 'yml'].includes(extension)) {
       continue
     }
 

@@ -19,7 +19,7 @@ Download the [latest version](https://github.com/Sopamo/via/releases) of via and
 
 Create your first project configuration file by running `v init my-project` and follow the instructions.
 
-Then you can then run `v my-project start` to start your project. Of course you can rename the my-project.yaml file to match your project's name.
+You can then run `v my-project start` to start your project. Of course, you can rename the my-project.yaml file to match your project's name.
 
 ## Project configuration
 
