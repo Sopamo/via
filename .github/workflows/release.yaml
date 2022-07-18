@@ -1,0 +1,60 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build_release:
+    name: build_release
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - name: build artifacts
+        run: >
+          deno compile  --allow-read --allow-run --allow-env --allow-write --target=x86_64-unknown-linux-gnu --output via-linux-x86_64 ./src/via.ts
+          && deno compile  --allow-read --allow-run --allow-env --allow-write --target=x86_64-apple-darwin --output via-apple-x86_64 ./src/via.ts
+          && deno compile  --allow-read --allow-run --allow-env --allow-write --target=aarch64-apple-darwin --output via-apple-arm ./src/via.ts
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ github.ref }}
+          tag_name: ${{ github.ref }}
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: upload linux artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./via-linux-x86_64
+          asset_name: via-linux-x86_64
+          asset_content_type: application/octet-stream
+      - name: upload apple x86 artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./via-apple-x86_64
+          asset_name: via-apple-x86_64
+          asset_content_type: application/octet-stream
+      - name: upload apple arm artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./via-apple-arm
+          asset_name: via-apple-arm
+          asset_content_type: application/octet-stream
