@@ -15,7 +15,7 @@
 <br />
 
 ## Project setup
-Download the [latest version](https://github.com/Sopamo/via/releases) of via and move it to `/usr/local/bin/v`.
+Download the [latest version](https://github.com/Sopamo/via/releases) of via and move it to `/usr/local/bin/v`. Make sure it's executable by running `sudo chmod +x /usr/local/bin/v`.
 
 Create your first project configuration file by running `v init my-project` and follow the instructions.
 
