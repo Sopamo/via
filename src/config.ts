@@ -12,8 +12,11 @@ export type ServiceName = string
 
 export type ActionName = string
 
+export type ProjectWideActionString = string // dot notation path to service action `services.backend.actions.migrate`
+
 export type ProjectConfig = {
   services: Record<ServiceName, ServiceConfig>
+  actions?: Record<ActionName, ProjectWideActionString | ProjectWideActionString[]>
 }
 
 export type ViaConfig = Record<ProjectName, ProjectConfig>
