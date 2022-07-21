@@ -5,7 +5,7 @@ const initConfigDirectory = () => {
   return ensureDir(`${getConfigRoot()}/projects`)
 }
 
-async initProjectConfigFile = (projectName: string) => {
+const initProjectConfigFile = async (projectName: string) => {
   const projectConfigFilePath = `${getConfigRoot()}/projects/${projectName}.yaml`
   if (await exists(projectConfigFilePath)) {
     console.log(`configuration file for project "${projectName}" already exists`)
@@ -13,11 +13,11 @@ async initProjectConfigFile = (projectName: string) => {
   }
 
   const exampleProjectConfigContent = `services:
-database:
-  path: ${Deno.env.get("HOME")}/path/to/service
-  actions:
-    start: docker-compose up -d
-    stop: docker-compose down
+  your-service-name:
+    path: ${Deno.env.get("HOME")}/path/to/service
+    actions:
+      start: docker-compose up -d
+      stop: docker-compose down
 `
     await Deno.writeTextFile(projectConfigFilePath, exampleProjectConfigContent)
 
@@ -26,8 +26,7 @@ database:
 }
 
 
-export const init = (args: string[]) => {
-  const projectName = args[0]
+export const init = (projectName: string) => {
   return async () => {
 
     if(!projectName) {

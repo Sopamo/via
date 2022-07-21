@@ -10,6 +10,8 @@ export type ProjectName = string
 
 export type ServiceName = string
 
+export type ActionName = string
+
 export type ProjectConfig = {
   services: Record<ServiceName, ServiceConfig>
 }
@@ -25,9 +27,7 @@ export async function getConfig(): Promise<ViaConfig> {
   const decoder = new TextDecoder("utf-8");
   const viaProjectConfigPath = getConfigRoot() + '/projects';
   if (!await exists(viaProjectConfigPath)) {
-    console.error('The config directory does not exists')
-    console.error('Create your first project configuration by running "v init <project name>"')
-    Deno.exit(1)
+    return {}
   }
   for await (const dirEntry of Deno.readDir(getConfigRoot() + '/projects')) {
     const extension = dirEntry.name.split('.').pop()

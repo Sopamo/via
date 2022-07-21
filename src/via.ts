@@ -1,33 +1,13 @@
-import { getCommandByArguments } from "./commandFactory.ts";
-import { runCommand } from "./runCommand.ts";
+import { getConfig } from './config.ts'
+import { createViaCommander } from './cliCommander.ts';
 
-const command = getCommandByArguments(Deno.args)
+const config = await getConfig()
 
-
-async function stopAllProjects() {
-  const projectProcesses = Object.keys(config).filter(p => p !== project).map((p) => {
-    const processes = Object.values(config[p].services).map(async service => {
-      await runCommand(service.actions["stop"], service.path)
-    })
-    return Promise.all(processes)
-  })
-  await Promise.all(projectProcesses)
+if (Object.keys(config).length === 0) {
+  console.error('No project configuration was found.')
+  console.error('Create your first project configuration by running "v init <project name>"')
 }
 
-if(projectWideActions.includes(command)) {
-  if(command === "start") {
-    await stopAllProjects()
-  }
+const via = await createViaCommander()
 
-  // Run the selected command in the selected project
-  const processes = Object.values(config[project].services).map(async service => {
-    await runCommand(service.actions[command], service.path)
-  })
-
-  await Promise.all(processes)
-} else {
-  const serviceName = args[1]
-  const command = args[2]
-  const service = config[project].services[serviceName]
-  await runCommand(service.actions[command], service.path)
-}
+via.parse(Deno.args)
