@@ -8,6 +8,6 @@ if (Object.keys(config).length === 0) {
   console.error('Create your first project configuration by running "v init <project name>"')
 }
 
-const via = await createViaCommander()
+const via = createViaCommander(config)
 
 via.parse(Deno.args)

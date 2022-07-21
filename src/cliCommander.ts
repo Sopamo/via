@@ -3,7 +3,7 @@ import { startProject } from "./commands/startProject.ts";
 import { stopProject } from "./commands/stopProject.ts";
 import { replaceProject } from "./commands/replaceProject.ts";
 import { runAction } from "./commands/runAction.ts";
-import { getConfig, ProjectConfig, ServiceConfig, ViaConfig, ProjectName } from "./config.ts";
+import { ProjectConfig, ServiceConfig, ViaConfig, ProjectName } from "./config.ts";
 
 import { Commander } from './commander.ts';
 import { editProject } from "./commands/editProject.ts";
@@ -54,11 +54,10 @@ const createServiceCommands = (commander: Commander, serviceName: string, servic
       })
 }
 
-export const createViaCommander = async () => {
+export const createViaCommander = (config: ViaConfig) => {
   const viaCommander = new Commander('v')
 
   viaCommander.version('0.0.1')
-  const config = await getConfig()
 
   viaCommander
     .command('init <Project>')

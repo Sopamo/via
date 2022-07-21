@@ -1,4 +1,4 @@
-import type {ViaConfig, ProjectConfig} from '../config'
+import type {ViaConfig, ProjectConfig} from '../config.ts'
 import { startProject } from './startProject.ts'
 import { stopProject } from './stopProject.ts'
 
