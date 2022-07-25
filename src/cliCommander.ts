@@ -7,6 +7,7 @@ import { ProjectConfig, ServiceConfig, ViaConfig, ProjectName } from "./config.t
 
 import { Commander } from './commander.ts';
 import { editProject } from "./commands/editProject.ts";
+import { runProjectWideAction } from "./commands/runProjectWideAction.ts";
 
 const createProjectCommands = (commander: Commander, viaConfig: ViaConfig, projectName: string, projectConfig: ProjectConfig) => {
   const projectCommander = commander
@@ -15,6 +16,8 @@ const createProjectCommands = (commander: Commander, viaConfig: ViaConfig, proje
       .forwardSubcommands()
   
   createDefaultCommands(projectCommander, projectConfig, projectName, viaConfig)
+
+  createProjectWideCommands(projectCommander, projectConfig, projectName, viaConfig)
 
   Object.entries(projectConfig.services).forEach(([serviceName, serviceConfig]) => {
     createServiceCommands(projectCommander, serviceName, serviceConfig)
@@ -38,6 +41,18 @@ const createDefaultCommands = (projectCommander: Commander, projectConfig: Proje
   projectCommander.command('edit')
     .description('change your project configuration')
     .action(editProject(projectName))
+}
+
+const createProjectWideCommands = (projectCommander: Commander, projectConfig: ProjectConfig) => {
+  if(!projectConfig.actions) {
+    return
+  }
+  Object.entries(projectConfig.actions).forEach(([actionName, actionConfig]) => {
+
+    projectCommander.command(actionName)
+      .description('<Action>')
+      .action(runProjectWideAction(actionConfig, projectConfig))
+  })
 }
 
 const createServiceCommands = (commander: Commander, serviceName: string, serviceConfig: ServiceConfig) => {

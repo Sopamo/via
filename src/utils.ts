@@ -54,35 +54,6 @@ export const resolveProjectWideActionStringToAction = (actionString: ProjectWide
 }
 
 
-
-export const resolveProjectWideActionStringToAction = (actionString: ProjectWideActionString, projectConfig: ProjectConfig): () => unknown  => {
-  if (isStringAProjectWideActionString(actionString)) {
-    const resolvedAction = resolveDotNotation(actionString, projectConfig)
-
-    if (!resolvedAction) {
-      throw Error('your configured action path could not be resolved')
-    }
-
-    return resolveProjectWideActionStringToAction(resolvedAction)
-  }
-
-  if (!actionString.startsWith('services.')) {
-    throw Error('actions paths not destinating in services is not supported')
-  }
-
-  // serivces.<service-name>.actions.x
-  let path = actionString.split('.')
-  path.splice(-2)
-  path = resolveDotNotation(`${path.join('.')}.path`, projectConfig)
-  const action = resolveDotNotation(actionString, projectConfig)
-  if(!typeof action !== 'string') {
-    abort('Invalid config')
-  }
-  return runAction(action, path)
-
-  // return {actionCommand: actionString, 
-}
-
 const resolveDotNotation = (path: string, obj: object): unknown => {
   return path.split('.').reduce(function(a, pathKey) {
     if (typeof a !== 'object' || a === null ) {
