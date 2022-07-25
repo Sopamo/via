@@ -1,8 +1,8 @@
-import { ProjectConfig } from "../config.ts";
+import { ProjectConfig, setCurrentProjectName } from "../config.ts";
 import { runCommand } from "../runCommand.ts";
 
 export const stopProject = (projectConfig: ProjectConfig) => {
-    return () => {
+    return async () => {
         const runningCommands = Object.values(projectConfig.services)
             .filter(service => {
                 return Object.keys(service.actions).includes('stop')
@@ -10,6 +10,7 @@ export const stopProject = (projectConfig: ProjectConfig) => {
             .map(service => {
                 return runCommand(service.actions['stop'], service.path)
             })
-        return Promise.all(runningCommands)
+        await Promise.all(runningCommands)
+        await setCurrentProjectName(null)
     }
 }

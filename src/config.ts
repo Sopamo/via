@@ -43,3 +43,27 @@ export async function getConfig(): Promise<ViaConfig> {
 
   return config
 }
+
+export const getCurrentProjectPath = () => {
+  return getConfigRoot() + '/currentProject'
+}
+
+export const getCurrentProjectName = async (): Promise<ProjectName|null> => {
+  try {
+    const projectName = await Deno.readTextFile(getCurrentProjectPath())
+    return projectName || null
+  } catch (_e) {
+    return null 
+  }
+}
+
+export const setCurrentProjectName = (projectName: ProjectName | null): Promise<void> => {
+  if (projectName === null) {
+    return Deno.remove(getCurrentProjectPath());
+  }
+  return Deno.writeTextFile(getCurrentProjectPath(), projectName);
+}
+
+export const isValidProjectName = (config: ViaConfig, projectName: ProjectName | null): projectName is ProjectName => {
+  return Object.keys(config).includes(projectName || '')
+}

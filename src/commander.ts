@@ -11,6 +11,10 @@ export class Commander extends OriginalCommand {
         return new Commander(name);
     }
 
+    public hasCommand(command: string): boolean {
+        return this.commands.some(cmd => cmd._name === command)
+    }
+
     /**
      * @see 
      */
