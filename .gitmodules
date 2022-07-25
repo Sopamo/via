@@ -1,0 +1,3 @@
+[submodule "distribution/aur-bin"]
+	path = distribution/aur-bin
+	url = ssh://aur@aur.archlinux.org/via-cli-bin.git
