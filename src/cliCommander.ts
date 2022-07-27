@@ -1,4 +1,4 @@
-import { bgRed, bgRgb24, white } from "https://deno.land/std/fmt/colors.ts";
+import { bgRed, bgRgb24 } from "https://deno.land/std/fmt/colors.ts";
 import { init } from "./commands/init.ts";
 import { startProject } from "./commands/startProject.ts";
 import { stopProject } from "./commands/stopProject.ts";
@@ -10,7 +10,7 @@ import { Commander } from './commander.ts';
 import { editProject } from "./commands/editProject.ts";
 
 const createProjectCommands = (projectCommander: Commander, viaConfig: ViaConfig, projectName: string) => {
-  
+
   const projectConfig = viaConfig[projectName]
   createDefaultCommands(projectCommander, projectName, viaConfig)
 

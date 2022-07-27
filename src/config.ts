@@ -53,13 +53,17 @@ export const getCurrentProjectName = async (): Promise<ProjectName|null> => {
     const projectName = await Deno.readTextFile(getCurrentProjectPath())
     return projectName || null
   } catch (_e) {
-    return null 
+    return null
   }
 }
 
-export const setCurrentProjectName = (projectName: ProjectName | null): Promise<void> => {
+export const setCurrentProjectName = async (projectName: ProjectName | null): Promise<void> => {
   if (projectName === null) {
-    return Deno.remove(getCurrentProjectPath());
+    // remove only if the file exists
+    if (await exists(getCurrentProjectPath())) {
+      return Deno.remove(getCurrentProjectPath());
+    }
+    return
   }
   return Deno.writeTextFile(getCurrentProjectPath(), projectName);
 }
