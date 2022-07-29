@@ -61,13 +61,27 @@ const createServiceCommands = (serviceCommander: Commander, serviceConfig: Servi
         .command(actionName)
         .description('<Action>')
         .action(runAction(actionCommand, serviceConfig))
+        .allowUnknownOption()
     })
 }
 
 export const createViaCommander = (config: ViaConfig, currentProjectName: ProjectName | null) => {
   const viaCommander = new Commander('v')
-
-  viaCommander.version('0.0.1')
+  // handle version output manually only on top level
+  // do not use .version() of commander.js because it could cause errors with
+  // action commands where arguments and options are getting passed through
+  viaCommander
+    .option('-V, --version', 'output the version of via')
+    .action((cmd, args: string[]) => {
+      const options = cmd.opts()
+      // if arguments are passed in here, the arguments does not match any other command
+      // in this case we just print the help text
+      if (args.length === 0 && 'version' in options && options.version === undefined) {
+        console.log('0.0.1', options);
+      } else {
+        cmd._helpAndError()
+      }
+    })
 
   viaCommander
     .command('init <Project>')
