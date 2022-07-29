@@ -10,7 +10,7 @@ import { runCommand } from "../runCommand.ts";
  */
 const getEditorCommand = async (): Promise<string> => {
     const process = Deno.run({
-        cmd: ['sh', '-c', 'if [ command -v editor 2> /dev/null ]; then echo -n "editor"; else echo -n "${EDITOR:-vi}"; fi'],
+        cmd: ['sh', '-c', 'if [ command -v editor 2> /dev/null ]; then echo "editor"; else echo "${EDITOR:-vi}"; fi'],
         stdout: 'piped'
     })
 
