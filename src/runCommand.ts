@@ -5,4 +5,5 @@ export async function runCommand(cmd: string, cwd: string) {
     cwd,
   });
   await p.status()
+  p.close()
 }
