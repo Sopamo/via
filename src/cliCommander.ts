@@ -72,7 +72,7 @@ export const createViaCommander = (config: ViaConfig, currentProjectName: Projec
   // action commands where arguments and options are getting passed through
   viaCommander
     .option('-V, --version', 'output the version of via')
-    .action((cmd, args: string[]) => {
+    .action((cmd, args: string[] = []) => {
       const options = cmd.opts()
       // if arguments are passed in here, the arguments does not match any other command
       // in this case we just print the help text
