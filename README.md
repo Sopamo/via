@@ -13,7 +13,8 @@
 brew tap sopamo/via https://github.com/sopamo/via
 brew install sopamo/via/via
 # Create an alias if you want to access via with v
-echo "alias v=via" >> .bash_aliases
+echo "alias v=via" >> ~/.bash_aliases
+source ~/.bash_aliases
 ```
 
 ### Linux (x86_64, snap)
@@ -21,14 +22,16 @@ echo "alias v=via" >> .bash_aliases
 # Coming soon, waiting for approval
 snap install via-cli --classic
 # Create an alias if you want to access via with v
-echo "alias v=via-cli" >> .bash_aliases
+echo "alias v=via-cli" >> ~/.bash_aliases
+source ~/.bash_aliases
 ```
 
 ### ArchLinux (x86_64, AUR)
 ```bash
 yay via-cli-bin 
 # Create an alias if you want to access via with v
-echo "alias v=via-cli" >> .bash_aliases
+echo "alias v=via-cli" >> ~/.bash_aliases
+source ~/.bash_aliases
 ```
 
 <div align="center">
