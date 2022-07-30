@@ -77,7 +77,7 @@ export const createViaCommander = (config: ViaConfig, currentProjectName: Projec
       // if arguments are passed in here, the arguments does not match any other command
       // in this case we just print the help text
       if (args.length === 0 && 'version' in options && options.version === undefined) {
-        console.log('0.0.1', options);
+        console.log('0.0.1');
       } else {
         cmd._helpAndError()
       }
