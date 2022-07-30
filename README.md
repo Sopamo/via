@@ -2,10 +2,34 @@
 <div align="center">
   <img src="https://raw.githubusercontent.com/Sopamo/via/main/assets/logo.png" width="269">
 
-  Easily start & stop your local dev environments from your cli
+  Manage your local dev environments with ease
 </div>
 <hr>
 <br /><br />
+
+## Installation
+### OSX (arm, brew)
+```bash
+brew tap sopamo/via https://github.com/sopamo/via
+brew install sopamo/via/via
+# Create an alias if you want to access via with v
+echo "alias v=via" >> .bash_aliases
+```
+
+### Linux (x86_64, snap)
+```bash
+# Coming soon, waiting for approval
+snap install via-cli --classic
+# Create an alias if you want to access via with v
+echo "alias v=via-cli" >> .bash_aliases
+```
+
+### ArchLinux (x86_64, AUR)
+```bash
+yay via-cli-bin 
+# Create an alias if you want to access via with v
+echo "alias v=via-cli" >> .bash_aliases
+```
 
 <div align="center">
 
@@ -15,8 +39,6 @@
 <br />
 
 ## Project setup
-Download the [latest version](https://github.com/Sopamo/via/releases) of via and move it to `/usr/local/bin/v`. Make sure it's executable by running `sudo chmod +x /usr/local/bin/v`.
-
 Create your first project configuration file by running `v init my-project` and follow the instructions.
 
 You can then run `v my-project start` to start your project. Of course, you can rename the my-project.yaml file to match your project's name.
