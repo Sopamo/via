@@ -111,11 +111,11 @@ services:
 
 | Term | Description | Example |
 | ---- | ----------- | ------- |
-| Project | combines logically and technical related services | TodoList |
+| Project | Combines logically and technical related services | TodoList |
 | Service | Individual folders/repos/services which are necessary to work on the project | `frontend`, `backend`, `database` |
-| Action | Is the name which refers the underlying command | `start: xxx` |
+| Action | Is the name which refers to the underlying command | `start: <cmd>` |
 | Command | The command which gets executed by via | `docker-compose up -d` |
-| Argument | All arguments passed after an via action. | `v my-project app exec x y -z` `x`,`y1`, `-z` are the Arguments |
+| Argument | All arguments passed after a via action. | `v my-project app exec x y -z` `x`,`y1`, `-z` are the Arguments |
 
 <br />
 <br />
