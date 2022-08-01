@@ -1,5 +1,6 @@
 import { getConfigRoot } from "../config.ts"
 import { ensureDir, exists } from "https://deno.land/std/fs/mod.ts"
+import { getDefaultProjectConfig } from "../defaultProjectConfig.ts"
 
 const initConfigDirectory = () => {
   return ensureDir(`${getConfigRoot()}/projects`)
@@ -12,13 +13,7 @@ const initProjectConfigFile = async (projectName: string) => {
     return
   }
 
-  const exampleProjectConfigContent = `services:
-  your-service-name:
-    path: ${Deno.env.get("HOME")}/path/to/service
-    actions:
-      start: docker-compose up -d
-      stop: docker-compose down
-`
+  const exampleProjectConfigContent = getDefaultProjectConfig(Deno.env.get("HOME") || '')
     await Deno.writeTextFile(projectConfigFilePath, exampleProjectConfigContent)
 
   console.log(`configuration file for project was created at "${projectConfigFilePath}"`)
