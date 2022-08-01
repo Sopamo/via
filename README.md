@@ -83,7 +83,7 @@ services:
       # Shell Operators
       #
       # use yaml multiline strings and shell operators to run multiple
-      # commands after the other.
+      # commands one after the other.
       start: >
         docker-compose up -d &&
         echo "startup done" &&
@@ -97,6 +97,7 @@ services:
       # v my-project app exec npm install double-vue
       exec: docker-compose exec app $@
       # You can pass individual shell arguments as well by using $1..$[x]
+      # v my-project app create-branch optimize-docs
       create-branch: git checkout -b feature/$1
 
       # Custom Shell
@@ -111,11 +112,11 @@ services:
 
 | Term | Description | Example |
 | ---- | ----------- | ------- |
-| Project | Combines logically and technical related services | TodoList |
+| Project | Groups services that are related to each other | TodoList |
 | Service | Individual folders/repos/services which are necessary to work on the project | `frontend`, `backend`, `database` |
 | Action | Is the name which refers to the underlying command | `start: <cmd>` |
 | Command | The command which gets executed by via | `docker-compose up -d` |
-| Argument | All arguments passed after a via action. | `v my-project app exec x y -z` `x`,`y1`, `-z` are the Arguments |
+| Argument | All arguments passed to a via action. | `v my-project app exec x y -z` `x`,`y1`, `-z` are the Arguments |
 
 <br />
 <br />
