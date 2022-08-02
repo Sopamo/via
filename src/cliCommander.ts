@@ -8,6 +8,7 @@ import { ServiceConfig, ViaConfig, ProjectName, isValidProjectName } from "./con
 
 import { Commander } from './commander.ts';
 import { editProject } from "./commands/editProject.ts";
+import { autocomplete } from "./commands/autocomplete.ts";
 
 const createProjectCommands = (projectCommander: Commander, viaConfig: ViaConfig, projectName: string) => {
 
@@ -82,6 +83,11 @@ export const createViaCommander = (config: ViaConfig, currentProjectName: Projec
         cmd._helpAndError()
       }
     })
+
+  viaCommander
+    .command('autocomplete')
+    .description('returns a data structure for zsh autocompletion')
+    .action(autocomplete())
 
   viaCommander
     .command('init <Project>')
